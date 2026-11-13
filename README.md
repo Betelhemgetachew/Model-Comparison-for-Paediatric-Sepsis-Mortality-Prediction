@@ -132,21 +132,23 @@ Output plots saved by the notebook: `precision_recall_curve.png`, `roc_curve.png
 - **Threshold chosen on the test set.** The Random Forest threshold was chosen by evaluating the test set, so the test metrics are not fully held-out. The threshold should be chosen within cross-validation on the training data.
 - **GridSearch on SMOTE-resampled data.** Synthetic samples leak across CV folds during tuning. Putting SMOTE inside an `imblearn` pipeline passed to `GridSearchCV` would avoid this.
 - **Imputation before splitting.** Means, medians, and modes were computed on the full dataset. Fitting imputers on training folds only would be stricter.
-- **Data entry anomalies.** Some MUAC values (e.g., 14–17) appear to be recorded in cm rather than mm and should be corrected.
+- **Data entry anomalies.** Some MUAC values (e.g., 14–17) appear to be recorded in cm rather than mm, and `lengthadm` contains impossible negative stays (minimum −85 days). Both should be corrected.
 - **Synthetic data.** Results may not generalise to real clinical populations without external validation.
 - **Next steps:** calibration analysis, SHAP-based interpretation, and a single consistent evaluation protocol across all four models.
 
 ## Project structure
 
 ```
-├── sepsis_mortality_prediction.ipynb       # Main notebook
+├── TI_Pediatric_sepsis.ipynb               # Main notebook
 ├── SyntheticData_Training.csv              # Dataset
+├── sepsis_cleaned.csv                      # Cleaned dataset (notebook output)
 ├── girls_length_height_for_age.csv         # WHO reference tables
 ├── boys_length_height_for_age.csv
 ├── girls_weight_for_age.csv
 ├── boys_weight_for_age.csv
 ├── acfa-girls-3-5-zscores.csv
 ├── acfa-boys-3-5-zscores.csv
+├── acfa-*-3-5-zscores.xlsx                 # Original WHO files
 ├── precision_recall_curve.png              # Generated output
 ├── roc_curve.png                           # Generated output
 └── README.md
